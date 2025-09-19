@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verdant Shores</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel='stylesheet'>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(180deg, #0a0f1f 0%, #0f1629 100%);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    /* Topbar */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #101828;
+      padding: 10px 20px;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .topbar .logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fbbf24;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .topbar .resources {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .resource-box {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      color: #e2e8f0;
+      padding: 6px 12px;
+      border: 1px solid #fff;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .resource-box i { font-size: 16px; }
+    .resource-gold i { color: #facc15; }
+    .resource-gems i { color: #38bdf8; }
+    .resource-energy i { color: #f97316; }
+
+    .wallet-btn {
+      padding: 6px 14px;
+      background: #fbbf24;
+      color: #000;
+      border-radius: 6px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      border: none;
+      transition: background 0.3s;
+    }
+
+    .wallet-btn:hover { background: #f59e0b; }
+    .wallet-btn i { font-size: 16px; }
+
+    /* Layout */
+    .content {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background: linear-gradient(180deg, #101828, #0f1629);
+      padding-top: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar a {
+      padding: 12px 20px;
+      text-decoration: none;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.3s;
+      border-left: 3px solid transparent;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+      background: #1e293b;
+      color: #fff;
+      border-left: 3px solid #fbbf24;
+    }
+
+    /* Main */
+    .main {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .header {
+      font-size: 28px;
+      font-weight: 600;
+      color: #fbbf24;
+    }
+
+    .cards {
+      display: flex;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .card {
+      flex: 1;
+      background: #0d1425;
+      border-radius: 8px;
+      padding: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      border: 1px solid #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .card i {
+      font-size: 20px;
+      margin-bottom: 6px;
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card p {
+      margin: 4px 0 0;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .card.total-parcels i, .card.total-parcels p { color: #facc15; }
+    .card.available i, .card.available p { color: #34d399; }
+    .card.avg-price i, .card.avg-price p { color: #60a5fa; }
+    .card.total-value i, .card.total-value p { color: #fbbf24; }
+
+    /* Specialties */
+    .specialties {
+      margin-top: 20px;
+      padding: 16px;
+      border: 1px solid #fff;
+      border-radius: 8px;
+      background: #0d1425;
+    }
+
+    .specialties h3 {
+      margin: 0 0 12px;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .tags {
+      display: flex;
+      gap: 10px;
+    }
+
+    .tag {
+      padding: 4px 10px;
+      border-radius: 12px;
+      background: #1e293b;
+      font-size: 13px;
+      font-weight: 500;
+      color: #fff;
+    }
+
+    .tag.farming { background: #92400e; }
+    .tag.herbalism { background: #065f46; }
+    .tag.winemaking { background: #7c2d12; }
+
+    /* Districts */
+    .explore-section {
+      margin-top: 30px;
+    }
+
+    .districts {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .district {
+      background: linear-gradient(160deg, #243045, #1b2536);
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      border: 1px solid #fff;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .district:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 14px rgba(255, 255, 255, 0.5);
+    }
+
+    .district h4 {
+      color: #facc15;
+      margin: 0 0 10px 0;
+    }
+
+    .district p {
+      margin: 4px 0;
+      font-size: 13px;
+    }
+
+    .district p span { font-weight: 600; }
+    .district .available { color: #34d399; }
+    .district .price { color: #60a5fa; }
+    .district .percentage { color: #f87171; }
+
+    .btn {
+      margin-top: 15px;
+      padding: 10px;
+      width: 100%;
+      background: #fbbf24;
+      color: #000;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn:hover {
+      background: #f59e0b;
+      transform: scale(1.05);
+      box-shadow: 0 0 12px rgba(251, 191, 36, 0.7);
+    }
+
+    /* District Information */
+    .district-info {
+      margin-top: 30px;
+      padding: 20px;
+      border: 1px solid #fff;
+      border-radius: 8px;
+      background: #0d1425;
+      display: flex;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    .district-info h4 { margin-top: 0; }
+    .tier-label {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+      margin-right: 8px;
+    }
+
+    .tier1 { background: #065f46; }
+    .tier2 { background: #1e3a8a; }
+    .tier3 { background: #6d28d9; }
+    .district-info ul { margin: 0; padding-left: 20px; color: #cbd5e1; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="logo"><i class='bx bxs-castle'></i> REALM TRADERS</div>
+    <div class="resources">
+      <div class="resource-box resource-gold"><i class='bx bx-coin'></i> 12,450</div>
+      <div class="resource-box resource-gems"><i class='bx bx-diamond'></i> 1,250</div>
+      <div class="resource-box resource-energy"><i class='bx bx-pickaxe'></i> 85</div>
+      <button class="wallet-btn"><i class='bx bx-wallet'></i> Wallet</button>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="sidebar">
+      <a href="#" class="active"><i class='bx bx-map'></i>World Map</a>
+      <a href="#"><i class='bx bx-store'></i>Marketplace</a>
+      <a href="#"><i class='bx bx-briefcase'></i>My Business</a>
+      <a href="#"><i class='bx bx-box'></i>Inventory</a>
+      <a href="#"><i class='bx bx-bank'></i>Bank</a>
+      <a href="#"><i class='bx bx-brain'></i>Skills & Experience</a>
+      <a href="#"><i class='bx bx-money'></i>Income</a>
+      <a href="#"><i class='bx bx-group'></i>Workers</a>
+      <a href="#"><i class='bx bx-compass'></i>Adventure</a>
+      <a href="#"><i class='bx bx-task'></i>Quests</a>
+    </div>
+
+    <div class="main">
+      <div class="header">VERDANT SHORES</div>
+      <p>Agricultural paradise with rolling hills and fertile lands</p>
+
+      <!-- Stat Cards -->
+      <div class="cards">
+        <div class="card total-parcels">
+          <h3><i class='bx bx-map-alt'></i> Total Parcels</h3>
+          <p>1,080</p>
+        </div>
+        <div class="card available">
+          <h3><i class='bx bx-box'></i> Available</h3>
+          <p>649</p>
+        </div>
+        <div class="card avg-price">
+          <h3><i class='bx bx-coin'></i> Avg Price</h3>
+          <p>1,200</p>
+        </div>
+        <div class="card total-value">
+          <h3><i class='bx bx-dollar-circle'></i> Total Value</h3>
+          <p>1.3M</p>
+        </div>
+      </div>
+
+      <!-- Specialties Section -->
+      <div class="specialties">
+        <h3>Island Specialties</h3>
+        <div class="tags">
+          <div class="tag farming">Farming</div>
+          <div class="tag herbalism">Herbalism</div>
+          <div class="tag winemaking">Wine Making</div>
+        </div>
+      </div>
+
+      <!-- Districts Section -->
+      <div class="explore-section">
+        <h3>Districts (3×3 Grid)</h3>
+        <div class="districts">
+          <div class="district">
+            <h4>Verdant District 1</h4>
+            <p class="available">Available: <span>73/120</span></p>
+            <p class="price">Avg Price: <span>1,200 G</span></p>
+            <p class="percentage">Availability: <span>61%</span></p>
+            <button class="btn">Explore District</button>
+          </div>
+          <div class="district">
+            <h4>Verdant District 2</h4>
+            <p class="available">Available: <span>73/120</span></p>
+            <p class="price">Avg Price: <span>1,200 G</span></p>
+            <p class="percentage">Availability: <span>61%</span></p>
+            <button class="btn">Explore District</button>
+          </div>
+          <div class="district">
+            <h4>Verdant District 3</h4>
+            <p class="available">Available: <span>63/120</span></p>
+            <p class="price">Avg Price: <span>1,200 G</span></p>
+            <p class="percentage">Availability: <span>53%</span></p>
+            <button class="btn">Explore District</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="district-info">
+        <div>
+          <h4>District Information</h4>
+          <p><strong>Tier System:</strong></p>
+          <p><span class="tier-label tier1">Tier 1</span> Starting areas, basic resources</p>
+          <p><span class="tier-label tier2">Tier 2</span> +25% price, better resources</p>
+          <p><span class="tier-label tier3">Tier 3</span> Premium areas, rare materials</p>
+        </div>
+        <div>
+          <h4>Each District Contains:</h4>
+          <ul>
+            <li>120 individual land parcels</li>
+            <li>6 zones of 20 parcels each</li>
+            <li>Specialized resource types</li>
+            <li>Building opportunities</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
